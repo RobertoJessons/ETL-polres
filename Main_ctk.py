@@ -44,11 +44,11 @@ except ImportError:
 
 def muat_modul_etl():
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    kandidat = ["Cleaning Data TA.py", "Cleaning_Data_TA.py"]
+    kandidat = ["Cleaning Data.py", "Cleaning_Data.py"]
     for nama in kandidat:
         path_modul = os.path.join(base_dir, nama)
         if os.path.exists(path_modul):
-            spec = importlib.util.spec_from_file_location("cleaning_data_ta", path_modul)
+            spec = importlib.util.spec_from_file_location("cleaning_data", path_modul)
             modul = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(modul)
             return modul, path_modul
@@ -531,16 +531,16 @@ class ColumnInspectorApp(ctk.CTk):
         etl_row.grid_columnconfigure(0, weight=1)
 
         if self.modul_etl is not None:
-            status_txt = f"Modul ETL nyata ditemukan: {os.path.basename(self._path_modul_etl)}"
+            status_txt = f"Modul ETL : {os.path.basename(self._path_modul_etl)}"
             status_warna = WARNA["sukses"]
         else:
-            status_txt = "Modul ETL nyata (Cleaning Data TA.py) tidak ditemukan di folder ini"
+            status_txt = "Modul ETL (Cleaning Data TA.py) tidak ditemukan di folder ini"
             status_warna = WARNA["aksen"]
         self.label_status_etl = ctk.CTkLabel(etl_row, text=status_txt, text_color=status_warna, anchor="w")
         self.label_status_etl.grid(row=0, column=0, sticky="w")
 
         self.btn_jalankan_etl = ctk.CTkButton(
-            etl_row, text="Jalankan ETL Lengkap (Sistem Nyata)",
+            etl_row, text="Jalankan ETL",
             command=self.jalankan_etl_lengkap, state="disabled", width=230
         )
         self.btn_jalankan_etl.grid(row=0, column=1, sticky="e")
